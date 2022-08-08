@@ -1,0 +1,1 @@
+curl -H "Authorization: Client-ID UzBZYTvyANptjbvS3oAmLrUcsxPcsLksdvTnIa0Kgx8" https://api.unsplash.com/photos/?query=baklava > data_curl.json
