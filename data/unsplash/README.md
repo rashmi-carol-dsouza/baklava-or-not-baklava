@@ -16,3 +16,6 @@ IMAGE_API=https://api.unsplash.com/search/photos
 ## Run Scraper
 
 `poetry run python __init__.py`
+
+
+
