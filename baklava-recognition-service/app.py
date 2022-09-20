@@ -1,5 +1,10 @@
 from flask import Flask, request, jsonify
 from flask_api import status
+import tensorflow
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing import image
+from PIL import Image
+import numpy as np
 
 import logging
 
@@ -9,10 +14,23 @@ class ImageNotProvided(Exception):
     """Raised when an image is not provided in the request"""
     pass
 
-# TODO: Delete this temporary mock function once the model function call is ready
-def pretrained_model(image):
-    import random
-    return random.choice([True, False])
+
+def pretrained_model(file_storage_img):
+
+    # Loading the model
+    model = load_model('../bvnb_model.h5')
+
+    # Image processing
+    img = Image.open(file_storage_img)
+    img = img.resize((224, 224))
+    X = image.img_to_array(img)
+    X = np.expand_dims(X, axis = 0)
+    images = np.vstack([X])
+
+    # Model prediction
+    val = model.predict(images)    
+    return True if val == 0 else False
+
 
 @app.post("/photo")
 def upload_photo():
@@ -20,7 +38,6 @@ def upload_photo():
         img = request.files.get('image')
         if img == None:
             raise ImageNotProvided("Image not sent")
-        # TODO: Replace the call below with the actual call to the model fn
         response = { "is_baklava": pretrained_model(img) }
         return jsonify(response)
     except Exception as error:
