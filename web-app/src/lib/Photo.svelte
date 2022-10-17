@@ -64,7 +64,8 @@
 
   const clickCameraButton = (event) => {
     event.preventDefault();
-    if (stateValue === STATE.IS_BAKLAVA || stateValue === STATE.IS_NOT_BAKLAVA) return;
+    if (stateValue === STATE.IS_BAKLAVA || stateValue === STATE.IS_NOT_BAKLAVA)
+      return;
     state.set(STATE.LOADING);
     canvasContext.drawImage(videoSource, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(async function (blob) {
@@ -80,24 +81,34 @@
 </script>
 
 <form>
-  <button
-    on:click={clickCameraButton}
-    class="button button-camera {getButtonClass()}"
-  >
-    {#if stateValue === STATE.IS_BAKLAVA}
-      <div class="icon icon-correct">
-        <FaCheck />
-      </div>
-    {:else if stateValue === STATE.IS_NOT_BAKLAVA}
-      <div class="icon icon-incorrect">
-        <IoMdClose />
-      </div>
-    {:else}
-      <div class="icon icon-default">
-        <FaCamera />
-      </div>
+  <div class="button-container">
+    <button
+      on:click={clickCameraButton}
+      class="button button-camera {getButtonClass()}"
+    >
+      {#if stateValue === STATE.IS_BAKLAVA}
+        <div class="icon icon-correct">
+          <FaCheck />
+        </div>
+      {:else if stateValue === STATE.IS_NOT_BAKLAVA}
+        <div class="icon icon-incorrect">
+          <IoMdClose />
+        </div>
+      {:else}
+        <div class="icon icon-default">
+          <FaCamera />
+        </div>
+      {/if}
+    </button>
+
+    {#if stateValue === STATE.IS_BAKLAVA || stateValue === STATE.IS_NOT_BAKLAVA}
+      <button on:click={revertToCameraView} class="button button-reset">
+        <div class="icon icon-reset">
+          <FaUndo />
+        </div>
+      </button>
     {/if}
-  </button>
+  </div>
 </form>
 
 <canvas bind:this={canvas} />
@@ -115,14 +126,6 @@
   {/if}
 </div>
 
-{#if stateValue === STATE.IS_BAKLAVA ||stateValue === STATE.IS_NOT_BAKLAVA}
-<button on:click={revertToCameraView} class="button button-reset">
-  <div class="icon icon-reset">
-    <FaUndo />
-  </div>
-</button>
-{/if}
-
 <style>
   h1 {
     position: absolute;
@@ -135,27 +138,25 @@
     position: relative;
   }
 
+  .button-container {
+    position: absolute;
+    left: 50%;
+    top: 100px;
+    transform: translateY(-50%) translateX(-50%);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .button {
     border-radius: 50%;
     border: 0;
     padding: 15px;
   }
 
-  .button-camera {
-    position: absolute;
-    left: 50%;
-    top: 100px;
-    transform: translateY(-50%) translateX(-50%);
-    z-index: 1;
-  }
-
   .button-reset {
     background-color: #566886;
-    position: fixed;
-    right: 10px;
-    bottom: 20px;
-    z-index: 1;
-    padding: 10px;
+    margin-left: 20px;
   }
 
   .video-stream,
@@ -188,10 +189,5 @@
 
   .button-reset {
     background-color: #566886;
-  }
-
-  .button-reset .icon {
-    width: 32px;
-    height: 32px;
   }
 </style>

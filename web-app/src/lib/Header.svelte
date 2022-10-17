@@ -13,9 +13,10 @@
     };
 
     $: getHeaderText = () => {
-        if (stateValue === STATE.IS_BAKLAVA) return "BAKLAVA";
-        if (stateValue === STATE.IS_NOT_BAKLAVA) return "NOT BAKLAVA";
-        return "BAKLAVA OR NOT BAKLAVA";
+        if (stateValue === STATE.IS_BAKLAVA) return "Baklava";
+        if (stateValue === STATE.IS_NOT_BAKLAVA) return "Not Baklava";
+        if(stateValue === STATE.LOADING) return "Loading...."
+        return "Point at object";
     };
 </script>
 
@@ -27,12 +28,13 @@
     header {
         padding: 20px;
         text-align: center;
-        font-size: 2.441rem;
+        font-size: 2rem;
         font-weight: 700;
         color: #fff;
         text-transform: uppercase;
-        z-index: 1;
+        z-index: 0;
         position: absolute;
+        bottom: 0;
         width: 100%;
     }
 
