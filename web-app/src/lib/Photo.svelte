@@ -41,14 +41,10 @@
   };
 
   async function postImage(formData) {
-    console.log(formData.values());
-    /*
-    const API_URL = "http://127.0.0.1:5000/photo";
+    const API_URL = `${import.meta.env.VITE_API_URL}/photo`;
     const response = await fetch(API_URL, { method: "POST", body: formData });
     const { is_baklava } = await response.json();
     return is_baklava;
-    */
-    return Promise.resolve(Math.random() < 0.5);
   }
 
   $: getButtonClass = () => {
