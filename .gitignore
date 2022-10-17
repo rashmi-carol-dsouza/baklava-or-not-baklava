@@ -9,6 +9,7 @@
 # OS / Editor
 .DS_STORE
 .vscode
+*.todo
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
