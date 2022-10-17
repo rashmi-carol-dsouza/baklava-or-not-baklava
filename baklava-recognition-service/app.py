@@ -5,10 +5,12 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from PIL import Image
 import numpy as np
+from flask_cors import CORS
 
 import logging
 
 app = Flask(__name__)
+CORS(app)
 
 class ImageNotProvided(Exception):
     """Raised when an image is not provided in the request"""
