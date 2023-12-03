@@ -29,7 +29,9 @@
     try {
       loading = true;
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          facingMode: 'environment'
+        },
         audio: false,
       });
       videoSource.srcObject = stream;
